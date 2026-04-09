@@ -3,9 +3,9 @@
 A Streamlit app for educational spill-response support. The app lets a user select a chemical, review hazard data from a CSV file, estimate a simplified evacuation radius, display a directional plume on a map, and save an incident log.
 
 ## Files
-- `app_optionA.py` — updated Streamlit app with wind direction, plume ellipse, and location geocoding
+- `app.py` — updated Streamlit app with wind direction, plume ellipse, and location geocoding
 - `chemicals.csv` — starter chemical safety dataset
-- `requirements_optionA.txt` — Python dependencies
+- `requirements.txt` — Python dependencies
 
 ## Run locally
 ```bash
