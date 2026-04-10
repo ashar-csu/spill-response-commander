@@ -166,7 +166,15 @@ def save_incident_log(record: dict) -> None:
         updated.to_csv(LOG_PATH, index=False)
     else:
         row.to_csv(LOG_PATH, index=False)
-
+        
+if LOG_PATH.exists():
+    with open(LOG_PATH, "rb") as f:
+        st.download_button(
+            "Download Incident Log",
+            f,
+            file_name="incident_log.csv",
+            mime="text/csv"
+        )
 
 def warning_banner(message: str) -> None:
     st.error(f"⚠️ {message}")
