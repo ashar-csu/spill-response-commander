@@ -167,14 +167,6 @@ def save_incident_log(record: dict) -> None:
     else:
         row.to_csv(LOG_PATH, index=False)
         
-if LOG_PATH.exists():
-    with open(LOG_PATH, "rb") as f:
-        st.download_button(
-            "Download Incident Log",
-            f,
-            file_name="incident_log.csv",
-            mime="text/csv"
-        )
 
 def warning_banner(message: str) -> None:
     st.error(f"⚠️ {message}")
@@ -380,6 +372,9 @@ with col1:
     st.write(f"**Wind Direction / Plume Direction:** {wind_direction}° ({deg_to_cardinal(wind_direction)})")
     st.write(f"**Spill Volume:** {spill_volume} liters")
 
+if "log_saved" not in st.session_state:
+    st.session_state.log_saved = False
+
 with col2:
     st.subheader("Evacuation Zone Map")
 
@@ -454,9 +449,20 @@ with col2:
                     "ResponderNotes": responder_notes,
                 }
             )
+            st.session_state.log_saved = True
             st.success(f"Incident saved to {LOG_PATH.name}")
         except Exception as exc:
             st.exception(exc)
+
+    if st.session_state.log_saved and LOG_PATH.exists():
+        with open(LOG_PATH, "rb") as f:
+            st.download_button(
+                "Download Incident Log",
+                f,
+                file_name="incident_log.csv",
+                mime="text/csv",
+                use_container_width=False,
+            )
 
 # -----------------------------
 # Footer note
